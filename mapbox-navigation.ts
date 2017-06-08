@@ -28,7 +28,7 @@ export class MapboxNavigation extends StackLayout {
     
     console.log('Initializing initMapnavigation')
     
-    let accessToken = 'pk.eyJ1Ijoia2F1cmFnMDA3IiwiYSI6ImNpeW03cHZjNzAwMzMzM2w3MjZsMjFkb3AifQ.3fDvF714qVeY8K44oXLY1w'
+    let accessToken = 'TOKEN'
  
     this.navigation = com.mapbox.services.android.navigation.v5.MapboxNavigation(this._context, accessToken)
     
