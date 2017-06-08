@@ -2,17 +2,17 @@
   "nativescript": {
     "id": "org.nativescript.demo",
     "tns-ios": {
-      "version": "2.5.0"
+      "version": "3.0.3"
     },
     "tns-android": {
-      "version": "2.5.0"
+      "version": "3.0.3"
     }
   },
   "dependencies": {
     "nativescript-mapbox-navigation": "file:///C:\\Users\\lmarc\\projects\\ns\\mapbox-navigation",
     "nativescript-theme-core": "^1.0.2",
     "nativescript-unit-test-runner": "^0.3.4",
-    "tns-core-modules": "~2.5.2"
+    "tns-core-modules": "~3.0.0"
   },
   "devDependencies": {
     "babel-traverse": "6.12.0",
