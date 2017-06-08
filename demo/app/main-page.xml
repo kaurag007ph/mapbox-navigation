@@ -1,0 +1,6 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      xmlns:navigation="nativescript-mapbox-navigation"
+      loaded="pageLoaded" class="page">
+
+      <navigation:MapboxNavigation></navigation:MapboxNavigation>
+</Page>

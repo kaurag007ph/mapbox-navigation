@@ -1,0 +1,10 @@
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'com.mapbox.mapboxsdk:mapbox-android-navigation:0.3.0'
+  compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:5.0.2@aar') {
+    transitive=true
+  }
+}
