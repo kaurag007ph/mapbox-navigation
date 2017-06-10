@@ -1,21 +1,15 @@
-import { StackLayout } from 'ui/layouts/stack-layout';
+import { View } from 'ui/core/view';
 
-declare const android, com, java, org: any;
+declare const android, com, java, org, retrofit2: any;
 
-export class MapboxNavigation extends StackLayout {
+let accessToken: any
+
+export class MapboxNavigation extends View {
   private navigation: any
   private locationEngine: any
   private mapView: any
 
-  constructor() {
-    console.log('Initialize constructor')
-    console.log(JSON.stringify(com))
-    super()
-    this.initMapNavigation()
-  }
-
   public createNativeView() {
-    console.log('Creating native view')
     this.nativeView = new android.widget.FrameLayout(this._context)
     setTimeout(() => {
       this.initMapNavigation()
@@ -25,21 +19,28 @@ export class MapboxNavigation extends StackLayout {
   }
   
   initMapNavigation() {
-    
-    console.log('Initializing initMapnavigation')
-    
-    let accessToken = 'TOKEN'
- 
-    this.navigation = com.mapbox.services.android.navigation.v5.MapboxNavigation(this._context, accessToken)
-    
-    let origin = com.mapbox.services.commons.models.Position.fromLatLng(38.90992, -77.03613)
-    let destination = com.mapbox.services.commons.models.Position.fromLatLng(38.8977, -77.0365)
+      console.log('Initializing initMapnavigation')
 
-    setTimeout(() => {
-        this.navigation.getRoute(origin, destination, () => {
-        console.log('getRoute')
-        })
-    }, 5000)
+      this.navigation = new com.mapbox.services.android.navigation.v5.MapboxNavigation(this._context, accessToken)
+      let origin = new com.mapbox.services.commons.models.Position.fromCoordinates(-79.44697773502429,43.65536978525574)
+      let destination = new com.mapbox.services.commons.models.Position.fromCoordinates(-79.44697773502844,43.6570908328672)
+
+      this.locationEngine = com.mapbox.mapboxsdk.location.LocationSource.getLocationEngine(this._context);
+      
+      this.navigation.getRoute(origin, destination, new retrofit2.Callback({
+        onResponse: (call, response) => {
+          let route = response.body().getRoutes().get(0)
+
+          this.locationEngine.setPriority(com.mapbox.services.android.telemetry.location.LocationEnginePriority.HIGH_ACCURACY)
+          this.locationEngine.setFastestInterval(1000)
+          this.locationEngine.activate()
+
+          this.navigation.setLocationEngine(this.locationEngine)
+          this.navigation.startNavigation(route);
+        },
+        onFailure: function(error) {
+          console.log('onFailure', error)
+        }
+      }))
   }
-  
 }
